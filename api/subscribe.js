@@ -1,33 +1,7 @@
-const https = require("https");
-
-function resendRequest(payload) {
-  return new Promise((resolve, reject) => {
-    const body = JSON.stringify(payload);
-    const options = {
-      hostname: "api.resend.com",
-      path: "/emails",
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
-        "Content-Type": "application/json",
-        "Content-Length": Buffer.byteLength(body),
-      },
-    };
-    const req = https.request(options, (res) => {
-      let data = "";
-      res.on("data", (chunk) => (data += chunk));
-      res.on("end", () => resolve({ status: res.statusCode, body: data }));
-    });
-    req.on("error", reject);
-    req.write(body);
-    req.end();
-  });
-}
-
 // ── Welcome email sent to the subscriber ──────────────────────────────────────
 function welcomeEmail(email) {
   return {
-    from: "Lone Melodies <onboarding@resend.dev>",
+    from: "onboarding@resend.dev",
     to: email,
     subject: "You're on the list — Unspoken Love 🌿",
     html: `<!DOCTYPE html>
@@ -149,7 +123,7 @@ function welcomeEmail(email) {
 // ── Notification email sent to Charan ─────────────────────────────────────────
 function notifyEmail(subscriberEmail) {
   return {
-    from: "Lone Melodies <onboarding@resend.dev>",
+    from: "onboarding@resend.dev",
     to: "charansaiponnada@gmail.com",
     subject: `✦ New subscriber — ${subscriberEmail}`,
     html: `<!DOCTYPE html>
@@ -196,6 +170,7 @@ function notifyEmail(subscriberEmail) {
 
 // ── Handler ───────────────────────────────────────────────────────────────────
 module.exports = async function handler(req, res) {
+  // CORS Headers
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
@@ -209,21 +184,47 @@ module.exports = async function handler(req, res) {
   }
 
   if (!process.env.RESEND_API_KEY) {
+    console.error("RESEND_API_KEY is missing from environment variables");
     return res.status(500).json({ error: "API key not configured" });
   }
 
   try {
+    console.log(`Attempting to subscribe: ${email}`);
+
+    const resendRequest = async (payload) => {
+      const response = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${process.env.RESEND_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+      const body = await response.json().catch(() => ({}));
+      return { status: response.status, body };
+    };
+
     const [welcomeRes, notifyRes] = await Promise.all([
       resendRequest(welcomeEmail(email)),
       resendRequest(notifyEmail(email)),
     ]);
 
     if (welcomeRes.status >= 400) {
-      console.error("Welcome email failed:", welcomeRes.body);
-      return res.status(500).json({ error: "Failed to send welcome email" });
+      console.error("Welcome email failed:", welcomeRes.status, welcomeRes.body);
+      return res.status(500).json({ 
+        error: "Failed to send welcome email",
+        details: welcomeRes.body.message || "Unknown error"
+      });
     }
 
+    if (notifyRes.status >= 400) {
+      console.warn("Notification email failed:", notifyRes.status, notifyRes.body);
+      // We don't necessarily want to fail the whole request if only the notification fails
+    }
+
+    console.log("Successfully subscribed:", email);
     return res.status(200).json({ success: true, message: "Subscribed successfully" });
+
   } catch (err) {
     console.error("Resend error:", err);
     return res.status(500).json({ error: "Something went wrong" });

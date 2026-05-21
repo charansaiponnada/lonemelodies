@@ -1040,7 +1040,15 @@
         body: JSON.stringify({ email: input.value.trim() })
       });
 
-      const data = await res.json();
+      let data;
+      const contentType = res.headers.get('content-type');
+      if (contentType && contentType.includes('application/json')) {
+        data = await res.json();
+      } else {
+        const text = await res.text();
+        console.error('Non-JSON response received:', text);
+        throw new Error('Server returned a non-JSON response');
+      }
 
       if (res.ok && data.success) {
         input.style.display = 'none';
@@ -1053,6 +1061,7 @@
         btn.textContent = 'Notify Me';
       }
     } catch (err) {
+      console.error('Subscription error:', err);
       errorMsg.textContent = 'Could not connect. Please try again.';
       errorMsg.style.display = 'block';
       btn.disabled = false;
