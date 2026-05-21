@@ -1,5 +1,3 @@
-const { kv } = require("@vercel/kv");
-
 // ── Welcome email sent to the subscriber ──────────────────────────────────────
 function welcomeEmail(email) {
   return {
@@ -193,15 +191,6 @@ module.exports = async function handler(req, res) {
   try {
     console.log(`Attempting to subscribe: ${email}`);
 
-    // 1. Store in Database (Vercel KV)
-    try {
-      await kv.sadd("subscribers", email);
-      console.log(`Stored ${email} in database`);
-    } catch (dbErr) {
-      console.error("Database error:", dbErr);
-      // We continue even if DB fails, or you can choose to fail here
-    }
-
     const resendRequest = async (payload) => {
       const response = await fetch("https://api.resend.com/emails", {
         method: "POST",
@@ -215,12 +204,40 @@ module.exports = async function handler(req, res) {
       return { status: response.status, body };
     };
 
-    const [welcomeRes, notifyRes] = await Promise.allSettled([
+    const createContact = async (email) => {
+      const payload = {
+        email: email,
+        unsubscribed: false,
+      };
+      
+      // If the user has an Audience ID, we use it. Otherwise, it just goes to "All Contacts"
+      if (process.env.RESEND_AUDIENCE_ID) {
+        payload.audienceId = process.env.RESEND_AUDIENCE_ID;
+      }
+
+      const response = await fetch("https://api.resend.com/contacts", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${process.env.RESEND_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+      return response.json().catch(() => ({}));
+    };
+
+    const [welcomeRes, notifyRes, contactRes] = await Promise.allSettled([
       resendRequest(welcomeEmail(email)),
       resendRequest(notifyEmail(email)),
+      createContact(email),
     ]);
 
     const welcome = welcomeRes.status === 'fulfilled' ? welcomeRes.value : { status: 500, body: { message: welcomeRes.reason?.message } };
+    
+    // Check contact creation (optional, we don't fail the request if this fails, but we log it)
+    if (contactRes.status === 'rejected' || (contactRes.value && contactRes.value.error)) {
+      console.warn("Failed to store contact in Resend:", contactRes.reason || contactRes.value.error);
+    }
     const notify = notifyRes.status === 'fulfilled' ? notifyRes.value : { status: 500, body: { message: notifyRes.reason?.message } };
 
     if (welcome.status >= 400) {
