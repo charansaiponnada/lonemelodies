@@ -204,22 +204,25 @@ module.exports = async function handler(req, res) {
       return { status: response.status, body };
     };
 
-    const [welcomeRes, notifyRes] = await Promise.all([
+    const [welcomeRes, notifyRes] = await Promise.allSettled([
       resendRequest(welcomeEmail(email)),
       resendRequest(notifyEmail(email)),
     ]);
 
-    if (welcomeRes.status >= 400) {
-      console.error("Welcome email failed:", welcomeRes.status, welcomeRes.body);
-      return res.status(500).json({ 
-        error: "Failed to send welcome email",
-        details: welcomeRes.body.message || "Unknown error"
+    const welcome = welcomeRes.status === 'fulfilled' ? welcomeRes.value : { status: 500, body: { message: welcomeRes.reason?.message } };
+    const notify = notifyRes.status === 'fulfilled' ? notifyRes.value : { status: 500, body: { message: notifyRes.reason?.message } };
+
+    if (welcome.status >= 400) {
+      console.error("Welcome email failed:", welcome.status, welcome.body);
+      return res.status(welcome.status).json({ 
+        error: "Resend API Error",
+        details: welcome.body.message || welcome.body.error || "Unknown error",
+        status: welcome.status
       });
     }
 
-    if (notifyRes.status >= 400) {
-      console.warn("Notification email failed:", notifyRes.status, notifyRes.body);
-      // We don't necessarily want to fail the whole request if only the notification fails
+    if (notify.status >= 400) {
+      console.warn("Notification email failed:", notify.status, notify.body);
     }
 
     console.log("Successfully subscribed:", email);
