@@ -1,3 +1,5 @@
+const { kv } = require("@vercel/kv");
+
 // ── Welcome email sent to the subscriber ──────────────────────────────────────
 function welcomeEmail(email) {
   return {
@@ -190,6 +192,15 @@ module.exports = async function handler(req, res) {
 
   try {
     console.log(`Attempting to subscribe: ${email}`);
+
+    // 1. Store in Database (Vercel KV)
+    try {
+      await kv.sadd("subscribers", email);
+      console.log(`Stored ${email} in database`);
+    } catch (dbErr) {
+      console.error("Database error:", dbErr);
+      // We continue even if DB fails, or you can choose to fail here
+    }
 
     const resendRequest = async (payload) => {
       const response = await fetch("https://api.resend.com/emails", {
