@@ -1,0 +1,117 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-06-19T21:53:00.000Z",
+  "title": "Design System: Lone Melodies",
+  "extensions": {
+    "colorMeta": {
+      "dark": { "role": "neutral", "displayName": "Room at Night", "canonical": "oklch(7% 0.015 55)", "tonalRamp": ["oklch(4% 0.01 55)", "oklch(7% 0.015 55)", "oklch(10% 0.02 55)", "oklch(13% 0.025 55)", "oklch(16% 0.025 55)", "oklch(20% 0.03 55)", "oklch(25% 0.03 55)", "oklch(30% 0.03 55)"] },
+      "surface": { "role": "neutral", "displayName": "Surface", "canonical": "oklch(9% 0.02 50)", "tonalRamp": ["oklch(6% 0.015 50)", "oklch(9% 0.02 50)", "oklch(12% 0.025 50)", "oklch(15% 0.025 50)", "oklch(18% 0.025 50)", "oklch(22% 0.03 50)", "oklch(27% 0.03 50)", "oklch(32% 0.03 50)"] },
+      "elevated": { "role": "neutral", "displayName": "Elevated", "canonical": "oklch(11% 0.025 50)", "tonalRamp": ["oklch(8% 0.02 50)", "oklch(11% 0.025 50)", "oklch(14% 0.025 50)", "oklch(17% 0.025 50)", "oklch(20% 0.03 50)", "oklch(24% 0.03 50)", "oklch(29% 0.03 50)", "oklch(34% 0.03 50)"] },
+      "warm-cream": { "role": "neutral", "displayName": "Warm Cream", "canonical": "oklch(93% 0.025 75)", "tonalRamp": ["oklch(75% 0.02 75)", "oklch(80% 0.02 75)", "oklch(85% 0.025 75)", "oklch(88% 0.025 75)", "oklch(91% 0.025 75)", "oklch(93% 0.025 75)", "oklch(95% 0.025 75)", "oklch(97% 0.02 75)"] },
+      "amber": { "role": "primary", "displayName": "Amber Lamplight", "canonical": "oklch(65% 0.14 75)", "tonalRamp": ["oklch(35% 0.1 75)", "oklch(42% 0.12 75)", "oklch(50% 0.13 75)", "oklch(57% 0.14 75)", "oklch(65% 0.14 75)", "oklch(72% 0.12 75)", "oklch(80% 0.1 75)", "oklch(88% 0.07 75)"] },
+      "leather": { "role": "secondary", "displayName": "Leather", "canonical": "oklch(28% 0.04 55)", "tonalRamp": ["oklch(18% 0.03 55)", "oklch(22% 0.035 55)", "oklch(28% 0.04 55)", "oklch(34% 0.045 55)", "oklch(40% 0.05 55)", "oklch(46% 0.055 55)", "oklch(52% 0.05 55)", "oklch(58% 0.04 55)"] },
+      "text-primary": { "role": "neutral", "displayName": "Text Primary", "canonical": "oklch(92% 0.015 75)", "tonalRamp": [] },
+      "border": { "role": "neutral", "displayName": "Border", "canonical": "oklch(20% 0.02 55)", "tonalRamp": [] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display (Script)", "purpose": "Hero title only. Pinyon Script. One per page." },
+      "headline": { "displayName": "Headline", "purpose": "Section titles. Cormorant Garamond 300 weight." },
+      "body": { "displayName": "Body", "purpose": "All reading text. Cormorant Garamond at 1.8 line height." }
+    },
+    "shadows": [
+      { "name": "book-ambient", "value": "0 20px 60px oklch(0% 0 0 / 0.4)", "purpose": "Single ambient shadow under the book mockup. The only shadow in the system." }
+    ],
+    "motion": [
+      { "name": "ease-out-expo", "value": "cubic-bezier(0.19, 1, 0.22, 1)", "purpose": "Default easing for entrances and reveals." },
+      { "name": "ease-out-quart", "value": "cubic-bezier(0.25, 0.46, 0.45, 0.94)", "purpose": "State transitions (hover, focus)." },
+      { "name": "fade-up", "value": "opacity 0.8s ease-out-expo, transform 0.8s ease-out-expo", "purpose": "Scroll-triggered entry animation." }
+    ],
+    "breakpoints": [
+      { "name": "mobile", "value": "640px" },
+      { "name": "tablet", "value": "900px" },
+      { "name": "desktop", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Main CTA. Book-like flat rectangle with hover ink-bleed effect.",
+      "html": "<button class=\"ds-btn-primary\"><span>Get Notified</span></button>",
+      "css": ".ds-btn-primary { position: relative; overflow: hidden; background: oklch(28% 0.04 55); color: oklch(93% 0.025 75); border: none; padding: 14px 36px; font-family: 'DM Sans', Helvetica, sans-serif; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; transition: background 0.3s ease; overflow: hidden; } .ds-btn-primary::before { content: ''; position: absolute; inset: 0; background: oklch(42% 0.06 60); transform: translateX(-100%); transition: transform 0.3s ease-out-quart; } .ds-btn-primary:hover::before { transform: translateX(0); } .ds-btn-primary span { position: relative; z-index: 1; } .ds-btn-primary:focus-visible { outline: 2px solid oklch(65% 0.14 75); outline-offset: 2px; }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Ghost CTA. Transparent with border that warms to amber on hover.",
+      "html": "<button class=\"ds-btn-secondary\">Read Excerpts</button>",
+      "css": ".ds-btn-secondary { background: transparent; color: oklch(92% 0.015 75); border: 1px solid oklch(20% 0.02 55); padding: 14px 36px; font-family: 'DM Sans', Helvetica, sans-serif; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; transition: border-color 0.3s ease, color 0.3s ease; } .ds-btn-secondary:hover { border-color: oklch(65% 0.14 75); color: oklch(65% 0.14 75); } .ds-btn-secondary:focus-visible { outline: 2px solid oklch(65% 0.14 75); outline-offset: 2px; }"
+    },
+    {
+      "name": "Excerpt Card",
+      "kind": "card",
+      "refersTo": "card-excerpt",
+      "description": "Book page laid flat. Numbered excerpt with hover bookmark reveal.",
+      "html": "<div class=\"ds-card-excerpt\"><div class=\"ds-card-num\">01</div><p class=\"ds-card-text\">\"She felt like a poem that he hadn't written yet.\"</p><span class=\"ds-card-source\">Chapter 1</span></div>",
+      "css": ".ds-card-excerpt { background: oklch(9% 0.02 50); padding: 48px 36px; position: relative; overflow: hidden; transition: background 0.4s ease; } .ds-card-excerpt::before { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: oklch(42% 0.06 60); transform: scaleX(0); transition: transform 0.4s ease-out-quart; transform-origin: left; } .ds-card-excerpt:hover { background: oklch(11% 0.025 50); } .ds-card-excerpt:hover::before { transform: scaleX(1); } .ds-card-num { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 72px; font-weight: 300; color: oklch(28% 0.04 55 / 0.2); line-height: 1; margin-bottom: 20px; } .ds-card-text { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-size: 16px; line-height: 2; color: oklch(85% 0.02 70); margin-bottom: 24px; } .ds-card-source { font-family: 'DM Sans', Helvetica, sans-serif; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: oklch(42% 0.06 60); }"
+    },
+    {
+      "name": "Email Input",
+      "kind": "input",
+      "refersTo": "input-email",
+      "description": "Border-only input that glows amber on focus.",
+      "html": "<div style=\"display:flex;max-width:480px;\"><input class=\"ds-input\" type=\"email\" placeholder=\"your@email.com\"/><button class=\"ds-input-btn\">Notify Me</button></div>",
+      "css": ".ds-input { flex: 1; background: transparent; border: 1px solid oklch(20% 0.02 55); border-right: none; color: oklch(92% 0.015 75); padding: 16px 24px; font-family: 'Cormorant Garamond', Georgia, serif; font-size: 14px; outline: none; transition: border-color 0.3s ease; } .ds-input::placeholder { color: oklch(50% 0.03 60); font-style: italic; } .ds-input:focus { border-color: oklch(65% 0.14 75); } .ds-input-btn { background: oklch(28% 0.04 55); color: oklch(93% 0.025 75); border: 1px solid oklch(28% 0.04 55); padding: 16px 32px; font-family: 'DM Sans', Helvetica, sans-serif; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; transition: background 0.3s ease; } .ds-input-btn:hover { background: oklch(42% 0.06 60); }"
+    },
+    {
+      "name": "Book Mockup",
+      "kind": "custom",
+      "refersTo": "book-mockup",
+      "description": "CSS 3D book with floating animation. Physical object in the room.",
+      "html": "<div class=\"ds-book-wrap\"><div class=\"ds-book\"><div class=\"ds-book-ornament\">✧ lone melodies ✧</div><div class=\"ds-book-title\"><span class=\"ds-book-word1\">Unspoken</span><span class=\"ds-book-word2\">Love</span></div><div class=\"ds-book-author\">Charan Sai Ponnada</div></div></div>",
+      "css": ".ds-book-wrap { width: 260px; height: 380px; animation: ds-float 6s ease-in-out infinite; } @keyframes ds-float { 0%, 100% { transform: translateY(0px) rotate(-2deg); } 50% { transform: translateY(-14px) rotate(-2deg); } } .ds-book { width: 100%; height: 100%; background: linear-gradient(135deg, oklch(28% 0.04 55) 0%, oklch(7% 0.015 55) 60%, oklch(5% 0.01 55) 100%); border-radius: 3px 12px 12px 3px; box-shadow: 0 20px 60px oklch(0% 0 0 / 0.4); position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 30px 20px; border-left: 8px solid oklch(5% 0.01 55); } .ds-book::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, transparent, oklch(65% 0.14 75 / 0.6), transparent); } .ds-book::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, transparent, oklch(65% 0.14 75 / 0.6), transparent); } .ds-book-ornament { font-family: 'Pinyon Script', cursive; color: oklch(65% 0.14 75); font-size: 12px; opacity: 0.7; letter-spacing: 2px; } .ds-book-word1 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 300; font-style: italic; font-size: 14px; color: oklch(92% 0.015 75 / 0.5); letter-spacing: 4px; text-transform: uppercase; display: block; margin-bottom: 4px; } .ds-book-word2 { font-family: 'Pinyon Script', cursive; font-size: 48px; color: oklch(93% 0.025 75); display: block; line-height: 1; text-shadow: 0 0 30px oklch(65% 0.14 75 / 0.2); } .ds-book-author { font-family: 'DM Sans', Helvetica, sans-serif; font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: oklch(92% 0.015 75 / 0.35); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Unspoken Room",
+    "overview": "This is not a stage. It is a room with worn furniture, amber lamplight, and the particular silence that means someone is listening. The visitor arrives not to be sold a book but to inhabit the emotional space the book creates. Every element \u2014 the grain of the type, the weight of the margins, the texture beneath the surface \u2014 exists to make that room feel real.\n\nThe system is warm, deep, and unhurried. It rejects the polished efficiency of modern web design in favor of something slower: a literary cadence, physical texture, and the kind of quiet that draws you closer. If the interface feels like it was built in a hurry, it has already failed.",
+    "keyCharacteristics": [
+      "Warm and enveloping \u2014 amber light, leather textures, deep brown shadows",
+      "Quiet and unhurried \u2014 generous spacing, restrained motion, room to breathe",
+      "Literary and physical \u2014 typography carries the emotional weight; nothing decorative",
+      "Intimate rather than impressive \u2014 the scale draws you in rather than shouting",
+      "Tactile warmth \u2014 the dark mode should feel like a dimly lit room, not a terminal"
+    ],
+    "rules": [
+      { "name": "The Amber Rule", "body": "Amber (the lamplight) appears exactly once per viewport as a focal point.", "section": "colors" },
+      { "name": "The No-Black Rule", "body": "No #000 or #fff. Every dark surface is a warm brown-black. Every light surface is a cream.", "section": "colors" },
+      { "name": "The One Script Rule", "body": "Pinyon Script is reserved for the book title on the cover mockup and the hero heading. One usage per page.", "section": "typography" },
+      { "name": "The Reading Rule", "body": "Body copy is Cormorant Garamond at 1rem minimum with 1.8 line height and 65\u201375ch max width.", "section": "typography" },
+      { "name": "The Warmth-As-Depth Rule", "body": "A surface closer to the user is warmer and lighter, not darker and shadowed.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do use Amber exactly once per viewport as the focal point. Rarity is its power.",
+      "Do let Cormorant Garamond carry the emotional weight. It is the voice of the book.",
+      "Do keep the dark warm. Tint every dark surface with a brown hue (chroma 0.015\u20130.025 at lightness 7\u201311%).",
+      "Do use generous top and bottom padding on sections (clamp(5rem, 10vw, 8rem)).",
+      "Do cap body text at 65\u201375ch. Reading comfort over layout convenience.",
+      "Do use the tonal layering system (warmth = depth) instead of drop shadows.",
+      "Do treat motion as a whisper: fade-ups, gentle reveals, ease-out-quart curves."
+    ],
+    "donts": [
+      "Don't use #000 or #fff. Every dark is warm; every light is cream.",
+      "Don't use em dashes. Use commas, colons, or periods.",
+      "Don't use side-stripe borders (border-left/right as colored accent).",
+      "Don't use gradient text (background-clip: text).",
+      "Don't use glassmorphism, blur effects, or translucent overlays.",
+      "Don't use the hero-metric template (big number, small label, supporting stats).",
+      "Don't use identical card grids with icon + heading + text.",
+      "Don't use modals. Inline reveals or nothing.",
+      "Don't use bounce or elastic easing. Exponential ease-out only.",
+      "Don't animate CSS layout properties.",
+      "Don't use Pinyon Script more than once per viewport."
+    ]
+  }
+}

@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>21 Days — Letter to Her | lone_melodies</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Mono:wght@300;400&family=Pinyon+Script&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --black: #080808;
+    --dark: #0e0e0e;
+    --card: #111111;
+    --border: rgba(255,255,255,0.06);
+    --paper: #f5f0e8;
+    --muted: rgba(245,240,232,0.45);
+    --green: #2d4a2d;
+    --green-soft: #4a7c4a;
+    --gold: #c9a84c;
+    --gold-dim: rgba(201,168,76,0.3);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--paper);
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+  }
+
+  /* HEADER */
+  header {
+    padding: 80px 64px 60px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  header::before {
+    content: 'LETTER TO HER';
+    position: absolute;
+    font-size: 180px;
+    font-weight: 300;
+    color: rgba(45,74,45,0.04);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    pointer-events: none;
+    letter-spacing: 20px;
+  }
+
+  .header-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: var(--green-soft);
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  h1 {
+    font-family: 'Pinyon Script', cursive;
+    font-size: clamp(56px, 8vw, 96px);
+    font-weight: 400;
+    line-height: 0.9;
+    color: var(--paper);
+    margin-bottom: 20px;
+  }
+
+  .header-sub {
+    font-style: italic;
+    font-size: 18px;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+
+  .header-desc {
+    font-size: 15px;
+    line-height: 1.9;
+    color: var(--muted);
+    max-width: 600px;
+  }
+
+  .header-meta {
+    margin-top: 40px;
+    display: flex;
+    gap: 48px;
+  }
+
+  .meta-item { }
+  .meta-num {
+    font-family: 'Pinyon Script', cursive;
+    font-size: 48px;
+    color: var(--gold);
+    line-height: 1;
+    display: block;
+  }
+  .meta-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* CONTENT GUIDE */
+  .guide {
+    padding: 48px 64px;
+    background: var(--green);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .guide-item h3 {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.5);
+    margin-bottom: 8px;
+  }
+
+  .guide-item p {
+    font-style: italic;
+    font-size: 14px;
+    line-height: 1.7;
+    color: rgba(245,240,232,0.8);
+  }
+
+  /* LETTERS GRID */
+  .letters {
+    padding: 64px;
+  }
+
+  .week-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--green-soft);
+    margin-bottom: 28px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .week-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .week-title {
+    font-style: italic;
+    font-size: 13px;
+    color: var(--gold);
+    font-family: 'Cormorant Garamond', serif;
+    margin-left: 8px;
+    font-weight: 300;
+  }
+
+  .week-block {
+    margin-bottom: 64px;
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-bottom: 2px;
+  }
+
+  .card {
+    background: var(--card);
+    padding: 36px 32px;
+    border: 1px solid var(--border);
+    position: relative;
+    transition: border-color 0.3s, background 0.3s;
+    cursor: default;
+  }
+
+  .card:hover {
+    background: #161616;
+    border-color: rgba(74,124,74,0.3);
+  }
+
+  .card:hover .card-day { color: var(--gold); }
+
+  .card-day {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--green-soft);
+    margin-bottom: 12px;
+    transition: color 0.3s;
+  }
+
+  .card-title {
+    font-style: italic;
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--paper);
+    margin-bottom: 16px;
+    line-height: 1.3;
+  }
+
+  .card-hook {
+    font-size: 14px;
+    line-height: 1.9;
+    color: var(--muted);
+    margin-bottom: 20px;
+    font-style: italic;
+    border-left: 2px solid var(--green);
+    padding-left: 14px;
+  }
+
+  .card-letter {
+    font-size: 13px;
+    line-height: 2;
+    color: rgba(245,240,232,0.6);
+    margin-bottom: 20px;
+  }
+
+  .card-caption {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    line-height: 1.8;
+    color: rgba(245,240,232,0.3);
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+
+  .card-source {
+    display: inline-block;
+    margin-top: 10px;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+
+  .card-source.from-book {
+    border-color: rgba(74,124,74,0.4);
+    color: var(--green-soft);
+  }
+
+  .card-source.new-content {
+    border-color: var(--gold-dim);
+    color: rgba(201,168,76,0.7);
+  }
+
+  /* POSTING TIPS */
+  .tips {
+    padding: 64px;
+    background: var(--dark);
+    border-top: 1px solid var(--border);
+  }
+
+  .tips h2 {
+    font-style: italic;
+    font-size: 36px;
+    font-weight: 300;
+    color: var(--paper);
+    margin-bottom: 8px;
+  }
+
+  .tips-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--green-soft);
+    margin-bottom: 40px;
+  }
+
+  .tips-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .tip-card {
+    background: var(--card);
+    padding: 32px;
+    border: 1px solid var(--border);
+  }
+
+  .tip-num {
+    font-family: 'Pinyon Script', cursive;
+    font-size: 52px;
+    color: rgba(45,74,45,0.3);
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+
+  .tip-title {
+    font-style: italic;
+    font-size: 17px;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+
+  .tip-body {
+    font-size: 13px;
+    line-height: 1.9;
+    color: var(--muted);
+  }
+
+  /* HASHTAG BOX */
+  .hashtags {
+    padding: 48px 64px;
+    background: var(--green);
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .hashtags h3 {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.5);
+    margin-bottom: 20px;
+  }
+
+  .tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    padding: 6px 14px;
+    border: 1px solid rgba(245,240,232,0.15);
+    color: rgba(245,240,232,0.7);
+    letter-spacing: 1px;
+  }
+
+  footer {
+    padding: 32px 64px;
+    background: #060606;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border);
+  }
+
+  footer span {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: rgba(245,240,232,0.2);
+  }
+
+  footer .footer-brand {
+    font-family: 'Pinyon Script', cursive;
+    font-size: 28px;
+    color: rgba(245,240,232,0.4);
+  }
+
+  @media (max-width: 900px) {
+    header, .letters, .tips, .hashtags, footer { padding: 48px 24px; }
+    .guide { grid-template-columns: 1fr 1fr; padding: 40px 24px; }
+    .cards { grid-template-columns: 1fr; }
+    .tips-grid { grid-template-columns: 1fr; }
+    header::before { font-size: 60px; }
+    .header-meta { gap: 24px; flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <span class="header-tag">@lone_melodies · campaign plan · 21 days</span>
+  <h1>Letter<br>to Her</h1>
+  <p class="header-sub">21 Days. 21 Reels. One Unspoken Love.</p>
+  <p class="header-desc">
+    A nameless boy. A nameless her. Letters written from a distance, never sent —
+    but finally spoken. A 21-day reel series to launch <em>Unspoken Love</em>
+    to the world, one letter at a time.
+  </p>
+  <div class="header-meta">
+    <div class="meta-item">
+      <span class="meta-num">21</span>
+      <span class="meta-label">Letters</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-num">3</span>
+      <span class="meta-label">Weeks</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-num">1</span>
+      <span class="meta-label">Story</span>
+    </div>
+  </div>
+</header>
+
+<!-- CONTENT GUIDE -->
+<div class="guide">
+  <div class="guide-item">
+    <h3>Format</h3>
+    <p>One reel per day. Text on screen. Your voice or trending audio. 30–45 seconds.</p>
+  </div>
+  <div class="guide-item">
+    <h3>Tone</h3>
+    <p>Mix of raw diary-like confessions and poetic metaphor. Never too polished.</p>
+  </div>
+  <div class="guide-item">
+    <h3>CTA</h3>
+    <p>End every reel with: "Full story in <em>Unspoken Love</em> — link in bio 🌿"</p>
+  </div>
+  <div class="guide-item">
+    <h3>Hook</h3>
+    <p>First 2 lines = the hook. Make it hit before they can scroll away.</p>
+  </div>
+</div>
+
+<!-- LETTERS -->
+<div class="letters">
+
+  <!-- WEEK 1 -->
+  <div class="week-block">
+    <div class="week-label">Week One <span class="week-title">— The Noticing</span></div>
+    <div class="cards">
+
+      <div class="card">
+        <div class="card-day">Day 01</div>
+        <div class="card-title">Before I Knew Your Name</div>
+        <div class="card-hook">"I noticed you before I knew your name. That's the thing about love — it arrives before you invite it."</div>
+        <div class="card-letter">
+          Dear her,<br><br>
+          I don't know when it started. I only know that one morning the world looked ordinary — and then you walked through it, and it hasn't looked ordinary since.
+        </div>
+        <div class="card-caption">Caption: some people walk into your life quietly. and wreck it beautifully. 🌿 #UnspokenLove</div>
+        <span class="card-source new-content">New Content</span>
+      </div>
+
+      <div class="card">
+        <div class="card-day">Day 02</div>
+        <div class="card-title">The Green That Stayed</div>
+        <div class="card-hook">"You wore green the first day. I don't think you know what that colour does to me now."</div>
+        <div class="card-letter">
+          Dear her,<br><br>
+          I see green and I see you. In leaves, in dupattas, in the traffic light that makes me pause and think of the way you moved that morning like the wind was already your friend.
+        </div>
+        <div class="card-caption">Caption: there's a colour i can never look at the same way again. you know which one. 💚</div>
+        <span class="card-source from-book">From the Book — Ch. 1</span>
+      </div>
+
+      <div class="card">
+        <div class="card-day">Day 03</div>
+        <div class="card-title">The Pen You Tapped Twice</div>
+        <div class="card-hook">"You tap your pen twice before you write. I've never told anyone I noticed. But I did. I always did."</div>
+        <div class="card-letter">
+          Dear her,<br><br>
+          Once you notice something about a person, you can never un-notice it. That's the quiet curse of paying attention to someone who doesn't know you're watching.
+        </div>
+        <div class="card-caption">Caption: the small things. always the small things that ruin you. 🖊️ #LetterToHer</div>
+        <span class="card-source from-book">From the Book — Ch. 1</span>
+      </div>
+
+      <div class="card">
+        <div class="card-day">Day 04</div>
+        <div class="card-title">Third Bench</div>
+        <div class="card-hook">"You chose the third bench. I sat close enough to call it coincidence. I was lying."</div>
+        <div class="card-letter">
+          Dear her,<br><br>
+          In that small distance between us, I built a galaxy. You were reading a roll number. I was memorizing the way you existed.
+        </div>
+        <div class="card-caption">Caption: proximity is dangerous when you already feel too much. 🌿</div>
+        <span class="card-source from-book">From the Book — Ch. 1</span>
+      </div>
+
+      <div class="card">
+        <div class="card-day">Day 05</div>
+        <div class="card-title">Your Laugh for Others</div>
+        <div class="card-hook">"You laughed at something someone else said. And I felt it like it was meant for me. That's how far gone I was."</div>
+        <div class="card-letter">
+          Dear her,<br><br>
+          Every smile you gave others became a page I wanted to rewrite with my name in it. I know how that sounds. I know.
+        </div>
+        <div class="card-caption">Caption: loving someone who doesn't know you exist is its own kind of full-time job. 💔</div>
+        <span class="card-source new-content">New Content</span>
+      </div>
+
+      <div class="card">
+        <div class="card-day">Day 06</div>
+        <div class="card-title">What I Wrote Instead</div>
+        <div class="card-hook">"I was supposed to take notes that day. I wrote about you instead. Margins full. Page useless. Heart fuller."</div>
+        <div class="card-letter">
+          Dear her,<br><br>
+          My notebook from that semester is not about engineering. It is about the way your hair moved. I'm not sorry.
+        </div>
+        <div class="card-caption">Caption: some notebooks are never meant to be studied from. only felt. 📓 #UnspokenLove</div>
+        <span class="card-source new-content">New Content</span>
+      </div>
+
+      <div class="card">
+        <div class="card-day">Day 07</div>
+        <div class="card-title">She Isn't Beautiful</div>
+        <div class="card-hook">"She isn't beautiful. She's poetry that forgot it was written on skin."</div>
+        <div class="card-letter">
+          Dear her,<br><br>
+          People ask me what you look like. I never know how to answer. Because it's not about what you look like. It's about what you feel like — standing near you, breathing the same air, pretending I'm fine.
+        </div>
+        <div class="card-caption">Caption: some people aren't meant to be described. only felt. 🌿 #LetterToHer</div>
+        <span class="card-source from-book">From the Book — Ch. 2</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- WEEK 2 -->
+  <div class="week-block">
+    <div class="week-label">Week Two <span class="week-title">— The Aching</span></div>
+    <div class="cards">
+
+      <div class="card">
+        <div class="card-day">Day 08</div>
+        <div class="card-title">The Message I Deleted</div>
+        <div class="card-hook">"I typed your name 47 times. Deleted it every single time. The unsent messages know more about me than anyone."</div>
+        <div class="card-letter">
+          Dear her,<br><br>
+          There's a graveyard in my drafts folder. Full of things I almost said. Full of you.
+        </div>
+        <div class="card-caption">Caption: if deleted messages had gravestones, mine would stretch for miles. 💔 #UnspokenLove</div>
+        <span class="card-source new-content">New Content</span>
+      </div>
+
+      <div class="card">
+        <div class="card-day">Day 09</div>
+        <div class="card-title">What Silence Feels Like</div>
+        <div class="card-hook">"Silence between us isn't empty. It's full of everything I never said. And it's heavy."</div>
+        <div class="card-letter">
+          Dear her,<br><br>
+          I smile when I'm dying. I laugh when I'm torn. Silence has taught me how shadows are born. You never knew the storm behind my calm. That was my doing. My choice. My loss.
+        </div>
+        <div class="card-caption">Caption: the quietest people are carrying the loudest things. 🖤</div>
+        <span class="card-source from-book">From the Book — Ch. 5</span>
+      </div>
+
+      <div class="card">
+        <div class="card-day">Day 10</div>
+        <div class="card-title">Your Name in My Handwriting</div>
+        <div class="card-hook">"I wrote your name in my notebook once. Then again. Then I filled the whole margin. I didn't even realise."</div>
+        <div class="card-letter">
+          Dear her,<br><br>
+          There is something terrifying about the way the hand moves before the mind decides. Like it already knows what the heart is trying to hide.
+        </div>
+        <div class="card-caption">Caption: the hand writes what the mouth refuses to say. 🌿 #LetterToHer</div>
+        <span class="card-source new-content">New Content</span>
+      </div>
+
+      <div class="card">
+        <div class="card-day">Day 11</div>
+        <div class="card-title">I Don't Know How to Start</div>
+        <div class="card-hook">"I've been writing this letter for two years. I still don't know the right first word."</div>
+        <div class="card-letter">
+          Dear her,<br><br>
+          Maybe the truth is there is no right word. Maybe love doesn't begin with a word at all. Maybe it begins with a green dupatta catching the wind and a boy who stood too still.
+        </div>
+        <div class="card-caption">Caption: some letters take years to write. and a lifetime to send. 💌 #UnspokenLove</div>
+        <span class="card-source new-content">New Content</span>
+      </div>
+
+      <div class="card">
+        <div class="card-day">Day 12</div>
+        <div class="card-title">You Don't Know</div>
+        <div class="card-hook">"You don't know that when you leave a room, the air gets heavier. You don't know a lot of things."</div>
+        <div class="card-letter">
+          Dear her,<br><br>
+          You don't know that I remember the date. The bench. The roll number you were mumbling. You don't know that I still think about that morning like it was the first page of something I never got to finish reading.
+        </div>
+        <div class="card-caption">Caption: she'll never know. and that's the whole story. 💔</div>
+        <span class="card-source from-book">From the Book — Ch. 3</span>
+      </div>
+
+      <div class="card">
+        <div class="card-day">Day 13</div>
+        <div class="card-title">2 AM and Your Name</div>
+        <div class="card-hook">"It's 2 AM. I'm not sad. I'm just awake, and you're the reason, and I don't know what to do with that."</div>
+        <div class="card-letter">
+          Dear her,<br><br>
+          The nights are the hardest. Not because they're dark. But because the quiet makes room for everything I push away in the daylight.
+        </div>
+        <div class="card-caption">Caption: 2 am thoughts have no filter. and every single one is about you. 🌙 #LetterToHer</div>
+        <span class="card-source new-content">New Content</span>
+      </div>
+
+      <div class="card">
+        <div class="card-day">Day 14</div>
+        <div class="card-title">The Bracelet</div>
+        <div class="card-hook">"She kept something for him. He kept everything about her. Neither of them said a word."</div>
+        <div class="card-letter">
+          Dear her,<br><br>
+          Some things get saved for the right moment. And then the right moment keeps not coming. And you hold on anyway, because letting go feels worse than waiting.
+        </div>
+        <div class="card-caption">Caption: waiting for the right moment costs more than people realise. 💚 #UnspokenLove</div>
+        <span class="card-source from-book">From the Book — Ch. 7</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- WEEK 3 -->
+  <div class="week-block">
+    <div class="week-label">Week Three <span class="week-title">— The Letting Go & Finding</span></div>
+    <div class="cards">
+
+      <div class="card">
+        <div class="card-day">Day 15</div>
+        <div class="card-title">What I Found in the Searching</div>
+        <div class="card-hook">"I went looking for her in every place she loved. What I found was myself — still there, still waiting, still writing."</div>
+        <div class="card-letter">
+          Dear her,<br><br>
+          I left notes in places I thought you'd find them. Poems on benches. Words on library desks. Not for you to reply. Just to feel like I existed in the same world you did.
+        </div>
+        <div class="card-caption">Caption: leaving pieces of yourself in places she might find them. that's love with nowhere to go. 🌿</div>
+        <span class="card-source from-book">From the Book — Ch. 9</span>
+      </div>
+
+      <div class="card">
+        <div class="card-day">Day 16</div>
+        <div class="card-title">Not Alone</div>
+        <div class="card-hook">"Someone saw the poems. Not her. Someone else. And said — you write like someone who feels the world too much."</div>
+        <div class="card-letter">
+          Dear her,<br><br>
+          Sometimes the person who sees you is not the one you were hoping would look. And sometimes — that's okay. Sometimes that's everything.
+        </div>
+        <div class="card-caption">Caption: being seen by the wrong person is still being seen. 💛 #LetterToHer</div>
+        <span class="card-source from-book">From the Book — Ch. 5</span>
+      </div>
+
+      <div class="card">
+        <div class="card-day">Day 17</div>
+        <div class="card-title">She Sleeps With Dreams in Her Eyes</div>
+        <div class="card-hook">"She sleeps with dreams in her eyes, while I stay awake writing lullabies."</div>
+        <div class="card-letter">
+          Dear her,<br><br>
+          I didn't send this poem either. I put it on a sticky note. Left it somewhere she'd find it. Let her wonder who wrote it. That was enough. That had to be enough.
+        </div>
+        <div class="card-caption">Caption: sometimes love is a sticky note and a held breath. 🌙 #UnspokenLove</div>
+        <span class="card-source from-book">From the Book — Ch. 5</span>
+      </div>
+
+      <div class="card">
+        <div class="card-day">Day 18</div>
+        <div class="card-title">The Hoodie</div>
+        <div class="card-hook">"She wore my hoodie like she'd always owned it. I told her to keep it. That was the closest I ever came to saying it."</div>
+        <div class="card-letter">
+          Dear her,<br><br>
+          There are a hundred ways to say I love you without ever saying it. Keeping your hoodie. Saving your seat. Remembering what coffee you hate and buying it anyway just to watch you scrunch your nose.
+        </div>
+        <div class="card-caption">Caption: "keep it." — three words that meant everything. 🖤 #LetterToHer</div>
+        <span class="card-source from-book">From the Book — Ch. 8</span>
+      </div>
+
+      <div class="card">
+        <div class="card-day">Day 19</div>
+        <div class="card-title">You Were the Story</div>
+        <div class="card-hook">"I wrote of you long before we met. In pages where our paths hadn't crossed yet."</div>
+        <div class="card-letter">
+          Dear her,<br><br>
+          I don't know how to explain this. But I think I always knew you were coming. Not your name. Not your face. Just the feeling of you — like a story I'd already started writing in my sleep.
+        </div>
+        <div class="card-caption">Caption: some people you recognise before you even meet them. 💚 #UnspokenLove</div>
+        <span class="card-source from-book">From the Book — Ch. 10</span>
+      </div>
+
+      <div class="card">
+        <div class="card-day">Day 20</div>
+        <div class="card-title">You Finally Said It</div>
+        <div class="card-hook">"She said — you finally said it. I said — I've been writing it all along."</div>
+        <div class="card-letter">
+          Dear her,<br><br>
+          Maybe love isn't about finding the right moment to speak. Maybe it's about writing and waiting and trusting that the right person will eventually hear it — even in the silence.
+        </div>
+        <div class="card-caption">Caption: it was always written. it just took time to be spoken. 💌 #LetterToHer</div>
+        <span class="card-source from-book">From the Book — Ch. 10</span>
+      </div>
+
+      <div class="card">
+        <div class="card-day">Day 21</div>
+        <div class="card-title">The Last Letter</div>
+        <div class="card-hook">"This is the 21st letter. The only one I'm actually sending. To you. To everyone who loved quietly and never said a word."</div>
+        <div class="card-letter">
+          Dear her — and everyone who is her,<br><br>
+          This wasn't just my story. It was yours too. The deleted messages. The 3 AM thoughts. The quiet love that had no address. It was all of ours.<br><br>
+          Unspoken Love is finally finding its voice.<br><br>
+          — the boy who wrote it all down 🌿
+        </div>
+        <div class="card-caption">Caption: 21 letters. 21 days. one story. Unspoken Love — available soon. link in bio 🌿 #UnspokenLove #LonesMelodies</div>
+        <span class="card-source from-book">Book Launch Reel</span>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- POSTING TIPS -->
+<div class="tips">
+  <h2>Posting Tips</h2>
+  <p class="tips-sub">HOW TO MAKE EACH REEL HIT</p>
+  <div class="tips-grid">
+    <div class="tip-card">
+      <div class="tip-num">01</div>
+      <div class="tip-title">The First 2 Lines are Everything</div>
+      <div class="tip-body">Use the hook line as your opening text on screen. Big. Italic. Centered. If it doesn't stop the scroll in 1 second, it won't work. Every hook above is designed to stop thumbs mid-air.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-num">02</div>
+      <div class="tip-title">Audio Choice</div>
+      <div class="tip-body">Use slow, melancholic instrumentals — Arijit Singh piano covers, Lo-fi Indian beats, or trending sad audio. Your voice reading the letter over music hits hardest. Try recording in one breath, no pauses.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-num">03</div>
+      <div class="tip-title">Visual Style</div>
+      <div class="tip-body">Dark background. White or cream serif text. No fancy transitions — just slow fades. Add a dried flower, an old notebook, or a rainy window in the background. Keep it feeling handwritten, not digital.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-num">04</div>
+      <div class="tip-title">Caption Formula</div>
+      <div class="tip-body">Short caption from the card above + 3–4 hashtags + "Full story in Unspoken Love — link in bio 🌿". Don't over-explain. Let the reel do the work. The caption is just the whisper after the scream.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-num">05</div>
+      <div class="tip-title">Story Continuity</div>
+      <div class="tip-body">Start each reel with "Letter #[day]" on screen. It creates a series feel — people will come back daily to follow the story. By Day 7 your regulars will be invested in the nameless boy and his unnamed her.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-num">06</div>
+      <div class="tip-title">Day 21 is the Launch</div>
+      <div class="tip-body">Save your biggest push for Day 21. That's your book announcement reel. All 20 days before it are warm-up. By Day 21, your audience will be emotionally ready to buy — or at least to share.</div>
+    </div>
+  </div>
+</div>
+
+<!-- HASHTAGS -->
+<div class="hashtags">
+  <h3>Recommended Hashtags — Rotate Daily</h3>
+  <div class="tag-list">
+    <span class="tag">#UnspokenLove</span>
+    <span class="tag">#LoneMelodies</span>
+    <span class="tag">#LetterToHer</span>
+    <span class="tag">#21DaysChallenge</span>
+    <span class="tag">#UnspokenFeelings</span>
+    <span class="tag">#OneLiners</span>
+    <span class="tag">#SadPoetry</span>
+    <span class="tag">#LoveLetters</span>
+    <span class="tag">#IndianPoetry</span>
+    <span class="tag">#HeartbreakPoetry</span>
+    <span class="tag">#QuietLove</span>
+    <span class="tag">#PoeticSoul</span>
+    <span class="tag">#CollegeLife</span>
+    <span class="tag">#WritersOfInstagram</span>
+    <span class="tag">#BookComingSoon</span>
+    <span class="tag">#DebutNovel</span>
+    <span class="tag">#TeluguWriter</span>
+    <span class="tag">#LonelyHearts</span>
+    <span class="tag">#MidnightThoughts</span>
+    <span class="tag">#SilentLove</span>
+  </div>
+</div>
+
+<footer>
+  <span>© 2025 Charan Sai Ponnada</span>
+  <span class="footer-brand">Lone Melodies</span>
+  <span>lonemelodies.vercel.app</span>
+</footer>
+
+</body>
+</html>
